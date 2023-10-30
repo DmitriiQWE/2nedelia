@@ -1,0 +1,62 @@
+{% extends 'basic.html' %}
+
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h4 class="mr-lg-5" style=" margin-top: 100px; margin-bottom: 20px; color: RoyalBlue">Добро пожаловать, <span
+        style="font-weight: bold;">{{ user.username }}</span></h4>
+<div class="h5 mr-lg-4 p-3 mb-2 border text-center"
+     style="background-color:DodgerBlue; color: white; border-radius: 15px;">Ваши заявки
+</div>
+<ul class="nav nav-pills mb-3" style="margin-top: 30px;">
+    <li class="nav-item"
+        style="background: DodgerBlue; border-radius: 20px; margin-right: 10px; :hover{background-color: RoyalBlue;}">
+        <a class="nav-link" href="{% url 'profile' %}" style="color: white; border-radius: 20px;">Все
+            заявки</a>
+    </li>
+    <li class="nav-item" style="background: DodgerBlue; border-radius: 20px; margin-right: 10px;">
+        <a class="nav-link" href="{% url 'filter' status='new' %}"
+           style="color: white; border-radius: 20px;">Новые заявки</a>
+    </li>
+    <li class="nav-item" style="background: DodgerBlue; border-radius: 20px; margin-right: 10px;">
+        <a class="nav-link" href="{% url 'filter' status='received' %}"
+           style="color: white; border-radius: 20px;">Принятые заявки</a>
+    </li>
+    <li class="nav-item" style="background: DodgerBlue; border-radius: 20px;">
+        <a class="nav-link" id="link_profile" href="{% url 'filter' status='done' %}"
+           style="color: white; border-radius: 20px;">Выполненные заявки</a>
+    </li>
+</ul>
+{% if apl_items %}
+{% for item in apl_items %}
+<div class="table justify-content-between row p-3" style="margin-top: 20px; border: dashed 1px blue">
+    <img class="col-4" src="{{ item.photo.url }}" alt="Фото заявки">
+    <p class="p-3 mb-2 mr-auto"><b>Наименование:</b> {{ item.name }} <br>
+        <b>Категория:</b> {{ item.Category }}
+        <br> <b>Дата добавления:</b> {{ item.date }} <br> <b>Описание:</b> {{ item.description }}
+        <br><b>Статус: </b>{{ item.status_verbose }}</p>
+    {% if item.status == 'new' %}
+    <a id="sad" href="/delete/{{ item.pk }}">
+        <button type="button" id="buttone" onclick="Yes()" class="btn btn-outline-danger"
+                style="height: 100%; width: 80px;">Удалить <br> заявку
+        </button>
+    </a>
+    {% endif %}
+</div>
+{% endfor %}
+{% else %}
+<p class="">Вы не создали ни одной заявки</p>
+{% endif %}
+<script>
+    function Yes() {
+        sad = document.getElementById('sad');
+        result = confirm('Точно удалить?');
+        if (result == false) {
+            sad.href = "/profile";
+        } else {
+            return;
+        }
+    }
+</script>
+{% endblock %}

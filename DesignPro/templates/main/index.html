@@ -1,0 +1,18 @@
+{% extends "basic.html" %}
+
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <h1 class="text-center" style="color: RoyalBlue; margin-top: 100px;">Добро пожаловать в студию дизайна <span style="font-weight: bold">DesignPro</span> </h1>
+    <p class="text-center" style="color: black; margin-top: 50px; font-size: 18px; color:CornflowerBlue; font-weight: bold;">Ниже можете ознакомиться сколько проектов у нас в работе, и наши новые готовые проекты!</p>
+    <h4 class="p-3 mb-2 border text-center" style="margin-top: 50px; background-color:DodgerBlue; color: white; border-radius: 15px;">На данный момент заявок в работе: <span style="color: white;">{{ counter }}</span></h4>
+    <h5 class="p-3 mb-2 border text-center" style="margin-top: 50px; background-color:DodgerBlue; color: white; border-radius: 15px; ">Наши последние проекты</h5>
+    {% for elem in done %}
+        <div class="row p-3" style="border: dashed 1px blue; margin-top: 50px;">
+            <img class="col-4" src="{{ elem.photo.url }}" alt="Фото заявки">
+            <p class="p-3 mb-2" style="color: DodgerBlue ;"><b style="color: DodgerBlue  ;">Наименование:</b> {{ elem.name }} <br> <b style="color: DodgerBlue ;">Категория:</b> {{ elem.Category }} <br> <b style="color: DodgerBlue ;">Дата
+                добавления:</b> {{ elem.date }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
